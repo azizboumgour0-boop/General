@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صحتك أولاً - منصة صحة جنسية شاملة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #3498db;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f8f9fa;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --border-color: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* ===== Assessment Section ===== */
+        .assessment-section {
+            padding: 4rem 0;
+            background-color: var(--light-bg);
+        }
+
+        .assessment-section h2,
+        .tips-section h2,
+        .resources-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .assessment-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question-card {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-card:last-of-type {
+            border-bottom: none;
+        }
+
+        .question-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #fafafa;
+        }
+
+        .radio-group label:hover {
+            border-color: var(--primary-color);
+            background-color: #f0fdf4;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 1rem;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .submit-btn,
+        .reset-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover,
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+        }
+
+        /* ===== Result Container ===== */
+        .result-container {
+            background: linear-gradient(135deg, #f0fdf4, #e8f5ff);
+            padding: 2rem;
+            border-radius: 15px;
+            border-right: 5px solid var(--primary-color);
+            margin-top: 2rem;
+        }
+
+        .result-container h3 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .score-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            gap: 2rem;
+        }
+
+        .score-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .score-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-advice {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-right: 4px solid var(--primary-color);
+            line-height: 1.8;
+        }
+
+        /* ===== Tips Section ===== */
+        .tips-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tip-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .tip-card.today {
+            border-top: 4px solid var(--warning-color);
+            background: linear-gradient(135deg, #fffbf0, #fff8f0);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .tip-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .tip-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tip-card li {
+            padding: 0.5rem 0;
+            padding-right: 2rem;
+            position: relative;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .tip-card li:before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* ===== Resources Section ===== */
+        .resources-section {
+            padding: 4rem 0;
+            background-color: var(--light-bg);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .info-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .footer-tips {
+            background: linear-gradient(135deg, #fff3cd, #fff9e6);
+            padding: 2rem;
+            border-radius: 15px;
+            border-right: 5px solid var(--warning-color);
+            margin: 2rem 0;
+        }
+
+        .footer-tips h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-tips li {
+            padding: 0.5rem 0;
+            color: var(--text-dark);
+            line-height: 1.8;
+            padding-right: 1rem;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: var(--dark-bg);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin: 0.5rem 0;
+            opacity: 0.9;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .assessment-section h2,
+            .tips-section h2,
+            .resources-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .tips-grid,
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-display {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .score-number {
+                font-size: 2.5rem;
+            }
+
+            .result-advice {
+                font-size: 0.95rem;
+            }
+
+            .assessment-container {
+                padding: 1rem;
+            }
+
+            .question-card {
+                margin-bottom: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 0.3rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .cta-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .radio-group label {
+                padding: 0.6rem;
+                font-size: 0.95rem;
+            }
+
+            .tip-icon {
+                font-size: 2rem;
+            }
+
+            .tip-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .footer-tips {
+                padding: 1rem;
+            }
+        }
+
+        /* ===== Accessibility ===== */
+        :focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        button:focus,
+        input:focus {
+            outline: 2px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">💚 صحتك أولاً</div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#assessment">التقييم</a></li>
+                <li><a href="#tips">النصائح اليومية</a></li>
+                <li><a href="#resources">المعلومات</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- القسم الرئيسي -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>منصة صحتك الجنسية</h1>
+            <p>منصة موثوقة لتحسين الصحة الجنسية والعافية</p>
+            <a href="#assessment" class="cta-btn">ابدأ التقييم الآن</a>
+        </div>
+    </section>
+
+    <!-- قسم التقييم -->
+    <section id="assessment" class="assessment-section">
+        <div class="container">
+            <h2>🔍 تقييم صحتك الجنسية</h2>
+            <p class="subtitle">أجب على الأسئلة التالية بصدق - جميع البيانات سرية</p>
+            
+            <div class="assessment-container">
+                <form id="assessmentForm">
+                    <!-- السؤال 1 -->
+                    <div class="question-card">
+                        <h3>1. كم مرة تعاني من القذف السريع؟</h3>
+                        <div class="radio-group">
+                            <label><input type="radio" name="q1" value="5"> نادراً (أقل من 25% من الأوقات)</label>
+                            <label><input type="radio" name="q1" value="3"> أحياناً (25-50% من الأوقات)</label>
+                            <label><input type="radio" name="q1" value="1"> غالباً (أكثر من 50% من الأوقات)</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 2 -->
+                    <div class="question-card">
+                        <h3>2. مدة العلاقة الحميمة عادة:</h3>
+                        <div class="radio-group">
+                            <label><input type="radio" name="q2" value="5"> أكثر من 10 دقائق</label>
+                            <label><input type="radio" name="q2" value="3"> 3-10 دقائق</label>
+                            <label><input type="radio" name="q2" value="1"> أقل من 3 دقائق</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 3 -->
+                    <div class="question-card">
+                        <h3>3. هل تمارس العادة السرية؟</h3>
+                        <div class="radio-group">
+                            <label><input type="radio" name="q3" value="4"> لا أمارسها</label>
+                            <label><input type="radio" name="q3" value="3"> نادراً (مرة أو أقل أسبوعياً)</label>
+                            <label><input type="radio" name="q3" value="1"> بكثرة (أكثر من مرة يومياً)</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 4 -->
+                    <div class="question-card">
+                        <h3>4. مستوى القلق حول الأداء الجنسي:</h3>
+                        <div class="radio-group">
+                            <label><input type="radio" name="q4" value="5"> منخفض جداً</label>
+                            <label><input type="radio" name="q4" value="3"> متوسط</label>
+                            <label><input type="radio" name="q4" value="1"> عالي جداً</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 5 -->
+                    <div class="question-card">
+                        <h3>5. جودة النوم والراحة:</h3>
+                        <div class="radio-group">
+                            <label><input type="radio" name="q5" value="5"> ممتازة (7-8 ساعات)</label>
+                            <label><input type="radio" name="q5" value="3"> جيدة (5-7 ساعات)</label>
+                            <label><input type="radio" name="q5" value="1"> ضعيفة (أقل من 5 ساعات)</label>
+                        </div>
+                    </div>
+
+                    <!-- السؤال 6 -->
+                    <div class="question-card">
+                        <h3>6. مستوى النشاط البدني:</h3>
+                        <div class="radio-group">
+                            <label><input type="radio" name="q6" value="5"> نشيط (تمرين منتظم)</label>
+                            <label><input type="radio" name="q6" value="3"> معتدل</label>
+                            <label><input type="radio" name="q6" value="1"> قليل جداً (خامل)</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">احسب تقييمي</button>
+                </form>
+
+                <!-- النتيجة -->
+                <div id="result" class="result-container" style="display: none;">
+                    <h3>📊 نتيجة التقييم</h3>
+                    <div class="score-display">
+                        <span id="scoreText" class="score-text"></span>
+                        <span id="scoreNumber" class="score-number"></span>
+                    </div>
+                    <div id="resultAdvice" class="result-advice"></div>
+                    <button class="reset-btn" onclick="resetAssessment()">إعادة التقييم</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم النصائح اليومية -->
+    <section id="tips" class="tips-section">
+        <div class="container">
+            <h2>💡 النصائح اليومية</h2>
+            <div class="tips-grid">
+                <!-- تلميح اليوم -->
+                <div class="tip-card today">
+                    <div class="tip-icon">🎯</div>
+                    <h3>نصيحة اليوم</h3>
+                    <p id="tipOfDay"></p>
+                </div>
+
+                <!-- تمارين الاسترخاء -->
+                <div class="tip-card">
+                    <div class="tip-icon">🧘</div>
+                    <h3>تمارين التنفس</h3>
+                    <ul>
+                        <li>خذ نفساً عميقاً من الأنف لمدة 4 ثوان</li>
+                        <li>احبس النفس لمدة 4 ثوان</li>
+                        <li>أطلق النفس ببطء لمدة 4 ثوان</li>
+                        <li>كرر 10 مرات يومياً</li>
+                    </ul>
+                </div>
+
+                <!-- التغذية -->
+                <div class="tip-card">
+                    <div class="tip-icon">🥗</div>
+                    <h3>أطعمة مفيدة</h3>
+                    <ul>
+                        <li>الأسماك الدهنية (أوميغا 3)</li>
+                        <li>الحمضيات والتوت</li>
+                        <li>المكسرات والبذور</li>
+                        <li>الخضراوات الورقية</li>
+                    </ul>
+                </div>
+
+                <!-- تقليل الإثارة -->
+                <div class="tip-card">
+                    <div class="tip-icon">🚫</div>
+                    <h3>تقليل المحفزات</h3>
+                    <ul>
+                        <li>حد من مشاهدة المحتوى المثير</li>
+                        <li>ابتعد عن المحفزات البصرية</li>
+                        <li>ركز على الجودة وليس الكمية</li>
+                        <li>مارس الانتباه الذاتي</li>
+                    </ul>
+                </div>
+
+                <!-- التمارين الرياضية -->
+                <div class="tip-card">
+                    <div class="tip-icon">💪</div>
+                    <h3>التمارين المفيدة</h3>
+                    <ul>
+                        <li>تمارين كيجل (تقوية عضلات الحوض)</li>
+                        <li>الركض أو المشي السريع</li>
+                        <li>تمارين اليوجا</li>
+                        <li>30 دقيقة يومياً</li>
+                    </ul>
+                </div>
+
+                <!-- الصحة النفسية -->
+                <div class="tip-card">
+                    <div class="tip-icon">🧠</div>
+                    <h3>الصحة النفسية</h3>
+                    <ul>
+                        <li>قلل القلق والتوتر</li>
+                        <li>تحدث مع شريكك بصراحة</li>
+                        <li>لا تخجل من طلب مساعدة</li>
+                        <li>ركز على اللحظة الحالية</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المعلومات -->
+    <section id="resources" class="resources-section">
+        <div class="container">
+            <h2>📚 معلومات وموارد مهمة</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>فهم القذف السريع</h3>
+                    <p>القذف السريع هو حالة يحدث القذف فيها قبل رغبة الشخص، غالباً خلال دقائق قليلة من الإيلاج. هذا شائع جداً ويمكن علاجه.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>العادة السرية والصحة</h3>
+                    <p>الاعتدال في ممارسة العادة السرية طبيعي وصحي. المشكلة تحدث عند الإفراط، وقد يؤثر على الأداء الجنسي والثقة بالنفس.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>متى تطلب مساعدة متخصص؟</h3>
+                    <p>إذا استمرت المشكلة لأكثر من 3 أشهر رغم محاولاتك، أو إذا أثرت على علاقاتك، استشر متخصصاً.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>العلاجات المتاحة</h3>
+                    <p>تشمل تقنيات سلوكية، كريمات موضعية، أدوية معتمدة، والاستشارات النفسية. اختر ما يناسبك.</p>
+                </div>
+            </div>
+
+            <div class="footer-tips">
+                <h3>⚠️ تذاكر مهمة:</h3>
+                <ul>
+                    <li>✅ جميع البيانات سرية وآمنة بنسبة 100%</li>
+                    <li>✅ هذا الموقع تعليمي ولا يحل محل الاستشارة الطبية</li>
+                    <li>✅ لا تتردد في استشارة طبيب متخصص</li>
+                    <li>✅ التحسن يحتاج وقتاً والصبر والمثابرة</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 صحتك أولاً - منصة صحة جنسية موثوقة | جميع الحقوق محفوظة</p>
+            <p>⚕️ استشر طبيبك دائماً قبل تطبيق أي نصائح</p>
+        </div>
+    </footer>
+
+    <script>
+        // نصائح يومية متعددة
+        const dailyTips = [
+            "🎯 تمرن لمدة 30 دقيقة يومياً - هذا يحسن الثقة بالنفس والأداء الجنسي",
+            "💧 اشرب كمية كافية من الماء - 8 أكواب يومياً تحسن الصحة العامة والجنسية",
+            "🧘 مارس تمارين التنفس العميق 5 دقائق يومياً - تقلل التوتر والقلق",
+            "🥗 تناول طعاماً صحياً غنياً بالفيتامينات - الأسماك والمكسرات والخضراوات",
+            "😴 نم 7-8 ساعات يومياً - النوم الكافي ضروري للأداء الجنسي",
+            "🚫 قلل من استهلاك الكافيين والكحول - قد يؤثران على الأداء",
+            "📱 ابتعد عن الأجهزة قبل النوم بساعة - تحسن جودة النوم",
+            "🤝 تحدث مع شريكك - التواصل المفتوح يحسن العلاقة والأداء",
+            "👨‍⚕️ لا تخجل من استشارة الطبيب - هناك حلول فعالة متاحة",
+            "📚 اقرأ عن الصحة الجنسية - المعرفة تقلل القلق والخوف",
+            "🎵 استمع للموسيقى الهادئة - تساعد على الاسترخاء والتركيز",
+            "🏃 التمرينات تحسن تدفق الدم - مهم جداً للصحة الجنسية"
+        ];
+
+        // الحصول على نصيحة اليوم
+        function getTipOfDay() {
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+            return dailyTips[dayOfYear % dailyTips.length];
+        }
+
+        // عرض نصيحة اليوم عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipOfDayElement = document.getElementById('tipOfDay');
+            if (tipOfDayElement) {
+                tipOfDayElement.textContent = getTipOfDay();
+            }
+        });
+
+        // معالجة نموذج التقييم
+        document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // التحقق من أن جميع الأسئلة تمت الإجابة عليها
+            const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'];
+            let allAnswered = true;
+            
+            for (let q of questions) {
+                const answer = document.querySelector(`input[name="${q}"]:checked`);
+                if (!answer) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            
+            if (!allAnswered) {
+                alert('⚠️ يرجى الإجابة على جميع الأسئلة');
+                return;
+            }
+            
+            // حساب النتيجة
+            let totalScore = 0;
+            for (let q of questions) {
+                const answer = document.querySelector(`input[name="${q}"]:checked`);
+                totalScore += parseInt(answer.value);
+            }
+            
+            // عرض النتيجة
+            displayResult(totalScore);
+            
+            // التمرير إلى نتيجة التقييم
+            setTimeout(() => {
+                document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        });
+
+        // دالة عرض النتيجة والنصائح
+        function displayResult(score) {
+            const maxScore = 30; // 5 × 6 أسئلة
+            const percentage = (score / maxScore) * 100;
+            
+            const resultDiv = document.getElementById('result');
+            const scoreText = document.getElementById('scoreText');
+            const scoreNumber = document.getElementById('scoreNumber');
+            const resultAdvice = document.getElementById('resultAdvice');
+            
+            scoreNumber.textContent = score + '/30';
+            
+            let status, advice, recommendation;
+            
+            if (percentage >= 80) {
+                status = '✅ ممتاز - حالتك جيدة جداً';
+                advice = `
+                    <strong>رائع! 🎉</strong><br><br>
+                    نتيجتك (${percentage.toFixed(0)}%) تشير إلى أن صحتك الجنسية بحالة جيدة جداً. 
+                    استمر في الحفاظ على عاداتك الصحية:<br>
+                    ✓ واصل التمارين الرياضية المنتظمة<br>
+                    ✓ حافظ على نوم منتظم وكافٍ<br>
+                    ✓ تابع النظام الغذائي الصحي<br>
+                    ✓ مارس تمارين كيجل بانتظام<br>
+                    النقطة الوحيدة: استمر في الاستماع لجسدك ولا تتردد في طلب المساعدة إذا احتجت.
+                `;
+            } else if (percentage >= 60) {
+                status = '🟡 جيد - بحاجة لتحسينات بسيطة';
+                advice = `
+                    <strong>تقدم جيد! 👍</strong><br><br>
+                    نتيجتك (${percentage.toFixed(0)}%) تشير إلى تحسن في الحالة لكن هناك مجال للتطور. 
+                    نركز على هذه النقاط:<br>
+                    ✓ زيادة النشاط البدني - حاول التمرين 3-4 مرات أسبوعياً<br>
+                    ✓ تحسين جودة النوم - احرص على 7 ساعات<br>
+                    ✓ مارس تمارين التنفس والاسترخاء يومياً<br>
+                    ✓ قلل من المحفزات البصرية<br>
+                    ✓ ركز على تمارين كيجل المتخصصة<br>
+                    سترى تحسناً ملحوظاً في غضون 2-3 أسابيع!
+                `;
+            } else if (percentage >= 40) {
+                status = '🔴 متوسط - يحتاج تدخل فعلي';
+                advice = `
+                    <strong>لا تقلق، هناك حل! 💪</strong><br><br>
+                    نتيجتك (${percentage.toFixed(0)}%) تشير إلى أن هناك تحديات تحتاج معالجة. 
+                    إليك ما يجب فعله:<br>
+                    ✓ ابدأ برنامج تمارين منتظم (30 دقيقة يومياً)<br>
+                    ✓ مارس تمارين كيجل بانتظام - 3 مجموعات يومياً<br>
+                    ✓ قلل من العادة السرية تدريجياً<br>
+                    ✓ تقنيات الإيقاف والبدء: توقف عند الاقتراب من القذف<br>
+                    ✓ استشر طبيباً متخصصاً (قد يصف أدوية آمنة)<br>
+                    <strong>النتائج تظهر بعد 4-6 أسابيع من الالتزام</strong>
+                `;
+            } else {
+                status = '⚠️ منخفض - يحتاج مساعدة متخصصة';
+                advice = `
+                    <strong>لا تستسلم! 🤝</strong><br><br>
+                    نتيجتك (${percentage.toFixed(0)}%) تشير إلى حاجة ماسة للتدخل. 
+                    هذه ليست حالة نادرة ولها علاجات فعالة:<br>
+                    <strong>خطوات فورية:</strong><br>
+                    ✓ استشر طبيباً متخصصاً في أسرع وقت<br>
+                    ✓ قد يوصي بأدوية مثل SSRIs أو مراهم موضعية<br>
+                    ✓ عالج نفسي متخصص قد يساعد<br>
+                    ✓ ابدأ تمارين كيجل فوراً<br>
+                    ✓ توقف عن العادة السرية للفترة الحالية<br>
+                    <strong>الكثيرون تعافوا - أنت قادر أيضاً!</strong><br>
+                    <strong>⚠️ مهم: استشارة الطبيب أولوية قصوى</strong>
+                `;
+            }
+            
+            scoreText.textContent = status;
+            resultAdvice.innerHTML = advice;
+            resultDiv.style.display = 'block';
+        }
+
+        // إعادة تعيين النموذج
+        function resetAssessment() {
+            document.getElementById('assessmentForm').reset();
+            document.getElementById('result').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // تأثيرات سلسة للتمرير
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
